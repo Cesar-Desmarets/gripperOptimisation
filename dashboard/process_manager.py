@@ -351,6 +351,17 @@ def _launch_sofa_scene(scene_file: Path, extra_env: dict | None = None) -> str:
     env["SOFAPYTHON3_ROOT"] = emiolabs_sofa_root
     env["SHAPEOPT_FORCE_PAUSED"] = "1"
 
+    # Explicitly point at the bundled Python's stdlib/DLLs. Without this,
+    # runSofa's embedded interpreter can fail to locate `encodings` at
+    # startup (PYTHONHOME left unset, relying on landmark auto-detection
+    # that inherited environment state can throw off) and SofaPython3.dll
+    # can fail to load if python3XX.dll isn't reachable via PATH.
+    sofa_python_dir = os.path.join(emiolabs_sofa_root, "bin", "python")
+    env["PYTHONHOME"] = sofa_python_dir
+    env["PATH"] = os.pathsep.join(
+        [sofa_python_dir, os.path.join(emiolabs_sofa_root, "bin"), env.get("PATH", "")]
+    )
+
     # Let the GUI runSofa self-resolve its Python; clear the explicit paths the
     # optimiser sets for its headless launches.
     for _k in ("SOFA_SITE_PACKAGES", "SOFA_PYTHON_PATH", "RUNSOFA_EXE"):

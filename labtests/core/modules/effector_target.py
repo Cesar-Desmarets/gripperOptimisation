@@ -94,6 +94,11 @@ def setup(
 
     # ── ImGui controls ────────────────────────────────────────────────────────
 
+    # The gripper's own opening/closing effector (Distance/DistanceMapping)
+    # is only built by addGripperEffector() — nothing upstream calls it
+    # since IK targeting here goes through MyGui.setIPController rather
+    # than the robot's built-in addEffector().
+    emio.centerpart.addGripperEffector()
     rest_lengths = emio.centerpart.Effector.Distance.DistanceMapping.restLengths
 
     MyGui.MoveWindow.addAccessory(

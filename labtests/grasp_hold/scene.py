@@ -32,7 +32,7 @@ from geometry.timing_config import DT_DIRECT as DT
 # points OPT_MOTOR_RECORDING at it. Manual/no-trial launches fall back to
 # the static reference recording.
 RECORD_FILE = os.environ.get("OPT_MOTOR_RECORDING") or str(
-    LAB_ROOT / "runtime" / "recordings" / "grasp_hold" / "motor_recording.json"
+    LAB_ROOT / "reference_recordings" / "grasp_hold" / "motor_recording.json"
 )
 
 

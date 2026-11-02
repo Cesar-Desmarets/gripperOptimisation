@@ -52,7 +52,7 @@ from launcher.bootstrap import bootstrap_lab
 SCRIPT_DIR, SRC_ROOT, APP_ROOT, LAB_ROOT = bootstrap_lab(__file__)
 
 DEFAULT_REFERENCE_RECORDING = (
-    LAB_ROOT / "runtime" / "recordings" / "grasp_hold" / "motor_recording.json"
+    LAB_ROOT / "reference_recordings" / "grasp_hold" / "motor_recording.json"
 )
 
 

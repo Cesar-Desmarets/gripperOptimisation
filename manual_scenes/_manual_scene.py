@@ -85,6 +85,12 @@ def build_manual_scene(rootnode, lab_root: Path):
     )
     MyGui.setIPController(rootnode.Modelling.Target, TCP, rootnode.ConstraintSolver)
 
+    # The gripper's own opening/closing effector (Distance/DistanceMapping)
+    # is only built by addGripperEffector() — nothing in this lab's scene
+    # construction calls it otherwise, since IK targeting here goes through
+    # MyGui.setIPController rather than the robot's built-in addEffector().
+    emio.centerpart.addGripperEffector()
+
     # --- ImGui accessories: opening slider, program window, I/O stream ---
     MyGui.MoveWindow.addAccessory(
         "Gripper's opening (mm)",

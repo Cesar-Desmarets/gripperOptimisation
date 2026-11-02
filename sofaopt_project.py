@@ -71,6 +71,11 @@ def _scene_env() -> dict[str, str]:
     env: dict[str, str] = {
         "SOFA_ROOT": sofa_root,
         "SOFAPYTHON3_ROOT": sofa_root,
+        # Without this, runSofa's embedded interpreter can fail to locate
+        # `encodings` at startup (Fatal Python error: init_fs_encoding),
+        # since this env dict is built from scratch and carries no hint
+        # for the landmark-based stdlib auto-detection to fall back on.
+        "PYTHONHOME": _SOFA["python_dir"],
     }
 
     path_chunks = [

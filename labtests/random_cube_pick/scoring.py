@@ -16,8 +16,7 @@ TEST_DESCRIPTION = "Cube pickup hold-time benchmark across 3 cube sizes"
 # perfect hold across all three sizes normalizes to 1.0.
 _RECORDING = (
     Path(__file__).resolve().parents[2]
-    / "runtime"
-    / "recordings"
+    / "reference_recordings"
     / "random_cube_pick"
     / "motor_recording.json"
 )

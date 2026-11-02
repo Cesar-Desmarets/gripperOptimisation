@@ -35,7 +35,7 @@ from geometry.timing_config import DT_DIRECT as DT
 # one trajectory per trial and both tests replay it via OPT_MOTOR_RECORDING.
 # Manual/no-trial launches fall back to the static reference recording.
 RECORD_FILE = os.environ.get("OPT_MOTOR_RECORDING") or str(
-    LAB_ROOT / "runtime" / "recordings" / "random_cube_pick" / "motor_recording.json"
+    LAB_ROOT / "reference_recordings" / "random_cube_pick" / "motor_recording.json"
 )
 
 # Cube scales lifted per run, in fixed order. The run is keyed off the per-test

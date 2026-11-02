@@ -67,9 +67,13 @@ def _pick_recording_target() -> str:
 
 
 RECORD_TARGET = _pick_recording_target()
-# Use LAB_ROOT to write to the same location tests read from
+# Deliberately OUTSIDE runtime/: starting a fresh run (no study.db yet) can
+# wipe runtime/ wholesale (sofaopt's archive.py treats a runtime/ with no
+# study.db/gen_* as an "empty scaffold" and rmtree's it), which would destroy
+# these reference recordings. Keeping them as a sibling of runtime/ makes
+# them survive that reset.
 RECORD_FILE = str(
-    LAB_ROOT / "runtime" / "recordings" / RECORD_TARGET / "motor_recording.json"
+    LAB_ROOT / "reference_recordings" / RECORD_TARGET / "motor_recording.json"
 )
 ASSEMBLY_SKIP_TIME = 0.0
 

@@ -15,8 +15,7 @@ TEST_DESCRIPTION = "Current cube-lift benchmark"
 # pre-pickup gate. Derived from the recording so it tracks the scene timing.
 _RECORDING = (
     Path(__file__).resolve().parents[2]
-    / "runtime"
-    / "recordings"
+    / "reference_recordings"
     / "grasp_hold"
     / "motor_recording.json"
 )
