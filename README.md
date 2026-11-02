@@ -6,7 +6,7 @@ Parametric gripper design and shape optimization lab, built for the EmioLabs pla
 
 ## Description
 
-Lab ShapeOPT lets you generate soft robotic gripper geometries from a parameter config and evaluate how well they grasp objects in a SOFA physics simulation. The optimization itself (Optuna + CMA-ES, parallel runSofa scheduling, scoring, live dashboard) is provided by the [sofaopt](https://github.com/SofaComplianceRobotics/SofaOptimisation) framework; this lab is a sofaopt *consumer* — it supplies the gripper parameters, the geometry generator, the test scenes and the scoring (see `sofaopt_project.py`).
+Lab ShapeOPT lets you generate soft robotic gripper geometries from a parameter config and evaluate how well they grasp objects in a SOFA physics simulation. The optimization itself (Optuna + CMA-ES, parallel runSofa scheduling, scoring, live dashboard) is provided by the [sofaopt](https://github.com/SofaComplianceRobotics/SofaOptimisation) framework; this lab is a sofaopt *consumer* — it supplies the gripper parameters, the geometry generator, the test scenes and the scoring (see `src/sofaopt_project.py`).
 
 ---
 
@@ -42,7 +42,7 @@ powershell -ExecutionPolicy Bypass -File lab_shapeOPT\tools\install_dev.ps1
 Then launch from the EmioLabs platform button, or directly:
 
 ```powershell
-& $SofaPy lab_shapeOPT\launcher\launch_web.py
+& $SofaPy lab_shapeOPT\src\launcher\launch_web.py
 ```
 
 <details>
@@ -79,22 +79,22 @@ git-ignored and holds nothing by default — build a fresh zip (after adding `so
 
 Generate a gripper mesh from the active config:
 ```bash
-python generation/generate_gripper.py
+python src/generation/generate_gripper.py
 ```
 
 Launch a SOFA simulation scene:
 ```bash
-runSofa.exe -l SofaPython3 manual_scenes/lab_shapeOPT_inverse.py
+runSofa.exe -l SofaPython3 src/manual_scenes/lab_shapeOPT_inverse.py
 ```
 
 Run the optimization loop:
 ```bash
-python launcher/optimize.py
+python src/launcher/optimize.py
 ```
 
 Open the dashboard:
 ```bash
-python launcher/launch_web.py
+python src/launcher/launch_web.py
 ```
 
 Run the unit tests:
@@ -108,21 +108,28 @@ python -m pytest
 
 ```
 lab_shapeOPT/
-├── config/            # lab_config.jsonc (the hand-edited gripper) + the optimizer's search-space selection
-├── cool_grippers/     # Curated saved gripper designs — reference configs and starting points
-├── dashboard/         # The lab's own dashboard tabs (Generate, Scenes, Parameter Guide) layered onto sofaopt's
-├── generation/        # Scripts to build a gripper mesh from the active config (standard and fine variants)
-├── geometry/          # Parametric geometry engine — part definitions, assembly, mesh export, param schema
-├── labtests/          # Auto-discovered simulation tests the optimizer runs to score grippers
-├── launcher/          # Entry points: launch_web.py, optimize.py, install_deps.py + the env bootstrap
-├── manual_scenes/     # Inverse-mode SOFA scenes: hand control, motor-trajectory recording (feeds the tests)
-├── project/           # EmioLabs platform project files (platform-specific format, not Python)
-├── runtime/           # Generated at runtime — Optuna DB, session config, trial results, mesh exports
-├── sections/          # Markdown shown in the EmioLabs lab page (assembled by lab_shapeOPT.md)
-├── tests/             # pytest unit tests for the pure-Python layers
-├── tools/             # Dev install and bundle-build scripts
-├── names.py           # Single source for cross-component part/file names
-└── sofaopt_project.py # The sofaopt adapter: params, tests, SOFA runtime, prepare hook
+├── lab.json, lab_shapeOPT.md  # EmioLabs lab manifest and entry page
+├── sections/              # Markdown shown in the EmioLabs lab page (assembled by lab_shapeOPT.md)
+├── project/               # EmioLabs platform project files (platform-specific format, not Python)
+├── src/                   # All the Python
+│   ├── dashboard/         # The lab's own dashboard tabs (Generate, Scenes, Parameter Guide) layered onto sofaopt's
+│   ├── generation/        # Scripts to build a gripper mesh from the active config (standard and fine variants)
+│   ├── geometry/          # Parametric geometry engine — part definitions, assembly, mesh export, param schema
+│   ├── labtests/          # Auto-discovered simulation tests the optimizer runs to score grippers
+│   ├── launcher/          # Entry points: launch_web.py, optimize.py, install_deps.py + the env bootstrap
+│   ├── manual_scenes/     # Inverse-mode SOFA scenes: hand control, motor-trajectory recording (feeds the tests)
+│   ├── names.py           # Single source for cross-component part/file names
+│   └── sofaopt_project.py # The sofaopt adapter: params, tests, SOFA runtime, prepare hook
+├── config/                # lab_config.jsonc (the hand-edited gripper) + the optimizer's search-space selection
+│   └── grippers/          # Curated saved gripper designs — reference configs and starting points
+├── data/                  # Committed inputs: reference motor recordings, failed-generation placeholder image
+├── tests/                 # pytest unit tests for the pure-Python layers
+├── tools/                 # Dev install and bundle-build scripts
+│
+│   Generated locally, git-ignored:
+├── runtime/               # The current run — Optuna DB, session state, trial results, mesh exports
+├── archives/              # Past runs (sofaopt moves runtime/ here when a fresh run starts)
+└── logs/                  # Dashboard and optimizer logs
 ```
 
 ---
@@ -131,7 +138,7 @@ lab_shapeOPT/
 
 - Parametric gripper geometry (~20 tunable parameters: ring shape, pincer spline, leg-attachment tilt, mesh resolution)
 - Parametric leg geometry (4 tunable parameters: end-point position and spline handle lengths) — default reproduces the stock blueleg, motor clip fused on every export; one shape per trial, plugged into all four of the gripper's leg attachments, optimized in the same trial as the gripper (no separate scoring)
-- Auto-discovered labtests — drop a folder in `labtests/` and it becomes a selectable test (grasp-hold, random cube pick, gripper tilt, reach zone)
+- Auto-discovered labtests — drop a folder in `src/labtests/` and it becomes a selectable test (grasp-hold, random cube pick, gripper tilt, reach zone)
 - SOFA simulation integration — each candidate is physically evaluated in the scene
 - The CMA-ES search, parallel runSofa scheduling, scoring pipeline, live dashboard and run archiving all come from **sofaopt**
 - Lab-side dashboard tabs: generate a mesh, launch a scene, browse the parameter guide

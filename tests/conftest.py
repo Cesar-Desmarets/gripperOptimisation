@@ -2,7 +2,7 @@
 
 pytest imports this file before any test module. Three jobs:
 
-1. Put the lab root on sys.path so `import geometry.params` etc. resolve
+1. Put src/ on sys.path so `import geometry.params` etc. resolve
    when pytest is run from anywhere.
 2. Provide dummy values for the SOFA_* env vars so sofaopt_project.py's
    runtime resolution never probes the filesystem. Unit tests never launch
@@ -20,8 +20,9 @@ import types
 from pathlib import Path
 
 LAB_ROOT = Path(__file__).resolve().parents[1]
-if str(LAB_ROOT) not in sys.path:
-    sys.path.insert(0, str(LAB_ROOT))
+SRC_ROOT = LAB_ROOT / "src"
+if str(SRC_ROOT) not in sys.path:
+    sys.path.insert(0, str(SRC_ROOT))
 
 # resolve_sofa_runtime() honours these before probing for an emio-labs
 # install, so they must exist before any test imports sofaopt_project.

@@ -21,7 +21,7 @@ The first launch can take a little longer while the environment is prepared.
 
 Click the button below to start the dashboard. A browser tab should open automatically (if not, browse to `http://localhost:8050`):
 
-#python-button("assets/labs/lab_shapeOPT/launcher/launch_web.py")
+#python-button("assets/labs/lab_shapeOPT/src/launcher/launch_web.py")
 
 Launch the dashboard with the button above, then take a tour of the tabs and identify the role of each one:
 

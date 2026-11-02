@@ -12,7 +12,7 @@ Here, that number comes from physics: every candidate gripper is mounted on a si
 | **Tilt Test** | Stability - penalizes grippers that tilt in edge-case poses. | 1 |
 | **Reach Zone** | Reach - sweeps a stack of points above and below working height and scores the volume of the 3D zone the gripper and leg can actually reach. | 1 |
 
-Each test lives in its own folder under `labtests/` with a SOFA scene and its scoring rules, and is discovered automatically - the checkboxes you see in the **Optimise** tab come straight from these folders.
+Each test lives in its own folder under `src/labtests/` with a SOFA scene and its scoring rules, and is discovered automatically - the checkboxes you see in the **Optimise** tab come straight from these folders.
 Tests with randomness (like Random Cube Pick) run several times per candidate so one lucky or unlucky run does not distort the score.
 
 ::: highlight

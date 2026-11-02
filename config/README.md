@@ -11,7 +11,7 @@ build right now.
 
 The `generation/` scripts read it (via `_gripper_common.load_jsonc`) when run
 with no `--config` argument — i.e. from the dashboard Generate button, the
-Config tab, or a bare `python generation/generate_gripper.py`. Supports `//`
+Config tab, or a bare `python src/generation/generate_gripper.py`. Supports `//`
 line comments (JSONC); they're stripped before parsing.
 
 The optimizer does **not** use this file. Each trial gets its own
@@ -31,7 +31,7 @@ dashboard's Parameters tab, or by hand.
 
 ## Format
 
-Keys map directly to `ModelParams` fields defined in `geometry/params.py`. Any field name works (except output naming, which is fixed in `names.py`). Unknown keys are silently ignored. Missing keys use the dataclass defaults.
+Keys map directly to `ModelParams` fields defined in `src/geometry/params.py`. Any field name works (except output naming, which is fixed in `src/names.py`). Unknown keys are silently ignored. Missing keys use the dataclass defaults.
 
 ```jsonc
 {
@@ -48,4 +48,4 @@ Keys map directly to `ModelParams` fields defined in `geometry/params.py`. Any f
 }
 ```
 
-To see all available keys, their search ranges, and their validity rules, refer to `geometry/params.py` — each field carries `opt` and `check` metadata.
+To see all available keys, their search ranges, and their validity rules, refer to `src/geometry/params.py` — each field carries `opt` and `check` metadata.

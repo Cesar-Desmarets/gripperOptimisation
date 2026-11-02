@@ -113,4 +113,4 @@ if ($already) {
 }
 
 Write-Host "`nDone. Restart EmioLabs, or launch directly with:"
-Write-Host "  & `"$SofaPy`" `"$LabRoot\launcher\launch_web.py`""
+Write-Host "  & `"$SofaPy`" `"$LabRoot\src\launcher\launch_web.py`""

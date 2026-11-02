@@ -20,7 +20,7 @@ During optimization such candidates are simply discarded with a penalty score, f
 
 ##### Reference designs
 
-The folder `cool_grippers/` contains curated parameter sets saved from past optimization runs, designs worth keeping as references or starting points. Each subfolder holds one complete config in the same format as the active one. To try one, copy its content into `config/lab_config.jsonc` and regenerate.
+The folder `config/grippers/` contains curated parameter sets saved from past optimization runs, designs worth keeping as references or starting points. Each subfolder holds one complete config in the same format as the active one. To try one, copy its content into `config/lab_config.jsonc` and regenerate.
 
 :::: exercise
 **Exercise 3:**
